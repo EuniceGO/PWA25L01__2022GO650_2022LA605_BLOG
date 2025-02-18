@@ -11,10 +11,10 @@ namespace L01_2022GO650_2022LA605.Models
             {
             }
 
-            public DbSet<Calificaciones> calificaciones { get; set; }
-            public DbSet<Comentarioscs> comentarios { get; set; }  // <--- Agregar esta línea
+            public DbSet<Calificaciones> Calificaciones { get; set; }
+            public DbSet<Comentarioscs> comentarios { get; set; } 
 
-            public DbSet<Usuarios> usuarios { get; set; }  // <--- Agregar esta línea
+            public DbSet<Usuarios> usuarios { get; set; }  
 
 
     
