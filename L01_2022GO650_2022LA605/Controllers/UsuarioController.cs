@@ -129,6 +129,24 @@ namespace L01_2022GO650_2022LA605.Controllers
 
             return Ok(usuariosFiltrados);
         }
+
+        [HttpGet]
+        [Route("CantidadComentarios")]
+        public IActionResult CantidadComentarios(int top)
+        {
+            var CantidadComentarios = (from u in _blogContexto.usuarios
+                                       join cc in _blogContexto.comentarios
+                                       on u.UsuarioId equals cc.usuarioId
+                                       group cc by new {u.UsuarioId, u.NombreUsuario} into cantidad
+                                       orderby cantidad.Count() descending
+                                       select new
+                                       {
+                                           Nombre = cantidad.Key.NombreUsuario,
+                                           CantidadComentarios = cantidad.Count()
+                                       }).Take(top).ToList();
+
+            return Ok(CantidadComentarios);
+        }
     }
 
 

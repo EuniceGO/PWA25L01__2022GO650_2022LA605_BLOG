@@ -45,8 +45,7 @@ namespace L01_2022GO650_2022LA605.Controllers
             if (calificacionActualicar == null)
             { return NotFound(); }
 
-            calificacionActualicar.publicacionId = modificarcalificacion.publicacionId;
-            calificacionActualicar.usuarioId = modificarcalificacion.usuarioId;
+            
             calificacionActualicar.calificacion = modificarcalificacion.calificacion;
 
             _blogcontext.Entry(calificacionActualicar).State = EntityState.Modified;
@@ -72,13 +71,11 @@ namespace L01_2022GO650_2022LA605.Controllers
         }
         
         
-        [HttpDelete]
+        [HttpGet]
         [Route("ObtenerPublicacion")]
         public IActionResult ObtenerCalificacionPublicacion(int publicacion_id)
         {
             Calificaciones? calificacion = (from c in _blogcontext.calificaciones
-                                            join uu in _blogcontext.calificaciones
-                                            on c.usuarioId equals uu.usuarioId
                                             where c.publicacionId == publicacion_id
                                             select c).FirstOrDefault();
 
