@@ -64,7 +64,6 @@ namespace L01_2022GO650_2022LA605.Controllers
 
             
             calificacionActualicar.calificacion = modificarcalificacion.calificacion;
-
             _blogcontext.Entry(calificacionActualicar).State = EntityState.Modified;
             _blogcontext.SaveChanges();
             return Ok(modificarcalificacion);

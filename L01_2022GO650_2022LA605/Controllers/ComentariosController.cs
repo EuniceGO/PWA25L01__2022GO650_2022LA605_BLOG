@@ -60,33 +60,28 @@ namespace L01_2022GO650_2022LA605.Controllers
 
         [HttpPut]
         [Route("actualizar/{id}")]
-        public IActionResult ActualizarEquipo(int id, [FromBody] Comentarioscs Comentarios)
+        public IActionResult ActualizarComentario(int id, [FromBody] Comentarioscs Comentarios)
         {
             //Para actualizar un registro, se obtiene el registro original de la base de datos
             //al cual alteraremos alguna propiedad
-            Comentarioscs? equipoActual = (from e in _blogContexto.comentarios
+            Comentarioscs? comentarioActual = (from e in _blogContexto.comentarios
                                       where e.cometarioId == id
                                       select e).FirstOrDefault();
 
             //Verificamos que exista el registro segun su ID
-            if (equipoActual == null)
+            if (comentarioActual == null)
             {
                 return NotFound();
             }
 
             //Si se encuentra el registro, se alteran los campos modificables
-            equipoActual.publicacionId = Comentarios.publicacionId;
-            equipoActual.comentario = Comentarios.comentario;
-            equipoActual.usuarioId = Comentarios.usuarioId;
+
+            comentarioActual.comentario = Comentarios.comentario;
+            
           
-
-
-
-
-
             //Se marca el registro como modificado en el contexto
             //y se envia la modificación a la base de datos
-            _blogContexto.Entry(equipoActual).State = EntityState.Modified;
+            _blogContexto.Entry(comentarioActual).State = EntityState.Modified;
             _blogContexto.SaveChanges();
 
             return Ok(Comentarios);
