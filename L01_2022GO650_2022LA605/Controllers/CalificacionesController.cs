@@ -17,6 +17,23 @@ namespace L01_2022GO650_2022LA605.Controllers
             _blogcontext = blogcontext;
         }
 
+        [HttpGet]
+        [Route("GetAllCalificaciones")]
+
+        public IActionResult Get()
+        {
+            List<Calificaciones> lsitadoCalificaciones = (from e in _blogcontext.calificaciones
+                                              select e).ToList();
+
+            if (lsitadoCalificaciones.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(lsitadoCalificaciones);
+        }
+
+
         [HttpPost]
         [Route("AddCalificacion")]
         public IActionResult AgrearCalificacion([FromBody] Calificaciones calificacion)
