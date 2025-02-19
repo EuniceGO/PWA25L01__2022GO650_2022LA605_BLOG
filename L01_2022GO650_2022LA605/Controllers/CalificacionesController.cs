@@ -23,7 +23,7 @@ namespace L01_2022GO650_2022LA605.Controllers
         {
             try
             {
-               _blogcontext.Calificaciones.Add(calificacion);
+               _blogcontext.calificaciones.Add(calificacion);
                 _blogcontext.SaveChanges();
                 return Ok();
             }
@@ -38,7 +38,7 @@ namespace L01_2022GO650_2022LA605.Controllers
         [Route("UpdateCalificacion")]
         public IActionResult ActualizarCalificacion(int id, [FromBody] Calificaciones modificarcalificacion)
         {
-            Calificaciones? calificacionActualicar = (from c in _blogcontext.Calificaciones
+            Calificaciones? calificacionActualicar = (from c in _blogcontext.calificaciones
                                        where c.calificacionId == id
                                        select c).FirstOrDefault();
 
@@ -58,15 +58,35 @@ namespace L01_2022GO650_2022LA605.Controllers
         [Route("DeleteCalificacion")]
         public IActionResult EliminarCalificacion(int id)
         {
-            Calificaciones? calificacion = (from c in _blogcontext.Calificaciones
+            Calificaciones? calificacion = (from c in _blogcontext.calificaciones
                             where c.calificacionId == id
                             select c).FirstOrDefault();
 
             if (calificacion == null)
                 return NotFound();
 
-            _blogcontext.Calificaciones.Attach(calificacion);
-            _blogcontext.Calificaciones.Remove(calificacion);
+            _blogcontext.calificaciones.Attach(calificacion);
+            _blogcontext.calificaciones.Remove(calificacion);
+            _blogcontext.SaveChanges();
+            return Ok(calificacion);
+        }
+        
+        
+        [HttpDelete]
+        [Route("ObtenerPublicacion")]
+        public IActionResult ObtenerCalificacionPublicacion(int publicacion_id)
+        {
+            Calificaciones? calificacion = (from c in _blogcontext.calificaciones
+                                            join uu in _blogcontext.calificaciones
+                                            on c.usuarioId equals uu.usuarioId
+                                            where c.publicacionId == publicacion_id
+                                            select c).FirstOrDefault();
+
+            if (calificacion == null)
+                return NotFound();
+
+            _blogcontext.calificaciones.Attach(calificacion);
+            _blogcontext.calificaciones.Remove(calificacion);
             _blogcontext.SaveChanges();
             return Ok(calificacion);
         }
